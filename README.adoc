@@ -1,0 +1,71 @@
+= Spring Cloud Stream Application for String Case Transformer with Kafka Binder
+
+This application will consume records from a Kafka topic and then convert its case based on the property `case.uppercase`.
+It will produce the transformed String into an outbound Kafka topic.
+
+By default, uppercase transformation is enabled in this application.
+You can disable it by setting `case.uppercase` to `false`.
+
+== Using as a template repository
+
+This repository can be used as a template repository for building custom applications that need to use Spring Cloud Stream Kafka binder.
+The application is already tailored to run on https://spring.io/projects/spring-cloud-dataflow[spring cloud data flow].
+
+== Customizing the application
+
+Since this is a template repository, it is most certain, you need to customize it to build your own business applications.
+Following are the main components that likely need to be changed.
+
+=== Business logic
+
+The business logic needs to be customized in the link:src/main/java/com/example/stream/app/CaseProcessorKafkaApplication.java[function] provided here.
+The package name may be adjusted.
+A template for configuration properites are provided link:src/main/java/com/example/stream/app/CaseProperties.java[here] which can be changed altogether to fit custom needs.
+
+=== Adding or updating maven configuraion
+
+All the versions used for the various dependencies in the application are in the associated maven pom configuration.
+You can update the versions or add new ones as necessary.
+The maven configuration also provides various plugins for building the docker image, and the metadata jar that contains the configuration properties to be used on Spring Cloud Data Flow.
+
+=== Boot properties and metadata
+
+All the Spring Boot properties used in the application are in the file link:src/main/resources/application.properties[applicaiton.properties] which you can further add or update properties to.
+If you update the function name, make sure to update that in the `application.properties` file appropriately where it overrides the binding names.
+
+The metadata plugin finds application specific configuration properties by looking for a special file `dataflow-configuration-metadata.properties` which can be found link:src/main/resources/META-INF/dataflow-configuration-metadata.properties[here].
+You need to update this file, if you change the configuration properties class name.
+
+== Building
+
+`./mvnw clean package`
+
+== Running
+
+You can set the input Kafka topic using the property below:
+
+`spring.cloud.stream.bindings.input.destination`.
+
+Similarly, for the output topic, use the property `spring.cloud.stream.bindings.output.destination`.
+
+For example, this is how you run the application for input topic `data-in` and output topic `data-out`.
+
+[source]
+----
+java -jar target/case-processor-kafka-0.0.1-SNAPSHOT.jar --spring.cloud.stream.bindings.input.destination=data-in --spring.cloud.stream.bindings.output.destination=data-out
+----
+
+== Docker build
+
+You can also build the docker image for the applicaton as below:
+
+```
+./mvnw clean package jib:build -DskipTests
+```
+
+This builds and pushes the container images to a container registry like Docker Hub.
+If you just want to build the docker image locally, you can do the following:
+
+```
+./mvnw clean package jib:dockerBuild -DskipTests
+```
