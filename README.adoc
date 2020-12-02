@@ -11,6 +11,9 @@ You can disable it by setting `case.uppercase` to `false`.
 This repository can be used as a template repository for building custom applications that need to use Spring Cloud Stream Kafka binder.
 The application is already tailored to run on https://spring.io/projects/spring-cloud-dataflow[spring cloud data flow].
 
+On the top right hand of this repository on GitHub, find the button `Use this template`, click on it and follow the instructions.
+You can find more instructions on how to get started from a template repository by following this https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template[guide].
+
 == Customizing the application
 
 Since this is a template repository, it is most certain, you need to customize it to build your own business applications.
