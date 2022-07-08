@@ -1,3 +1,5 @@
+# dataflow-app-kafka is no longer actively maintained by VMware, Inc.
+
 = Spring Cloud Stream Application for String Case Transformer with Kafka Binder
 
 This application will consume records from a Kafka topic and then convert its case based on the property `case.uppercase`.
